@@ -65,11 +65,34 @@ gulp.task('css', function(){
 
 gulp.task('lint', function(){
 	return gulp.src(config.paths.js)
-	           .pipe(eslint( { config: 'eslint.config.json' }))
-	           .pipe(eslint.format());
+		.pipe(lint({
+		  	  "root": true,
+			  "ecmaFeatures": {
+			    "jsx": true
+			   },
+		        rules: {
+		            "quotes": 0,
+				    "no-trailing-spaces": 0,
+				    "eol-last": 0,
+				    "no-unused-vars": 0,
+				    "no-underscore-dangle": 0,
+				    "no-alert": 0,
+				    "no-lone-blocks": 0
+		        },
+		        globals: [
+		            'jQuery',
+		            '$'
+		        ],
+		        envs: [
+		            'browser',
+		            'node',
+		            'jquery'
+		        ]
+        }))
+		.pipe(lint.format());
 });
 gulp.task('watch', function(){
 	gulp.watch(config.paths.html,['html']);
-	gulp.watch(config.paths.js,['js']);
+	gulp.watch(config.paths.js,['js', 'lint']);
 })
-gulp.task('default',['html', 'js', 'css', 'open', 'watch']);
+gulp.task('default',['html', 'js', 'css', 'open', 'lint', 'watch']);
