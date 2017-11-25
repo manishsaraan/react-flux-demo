@@ -1,2 +1,4 @@
 node_modules
 dist/*.html
+dist/css/bundle.css
+dist/scripts/bundle.js
