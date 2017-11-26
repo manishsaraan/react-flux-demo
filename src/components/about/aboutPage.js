@@ -2,6 +2,22 @@
 var React = require('react');
 
 var About = React.createClass({
+	statics : {
+		willTransitionTo : function(transition, params, query, callback){
+             if(!confirm('Are you sure you want to read the page')){
+             	 transition.abort();
+             }
+             else{
+             	callback();
+             }
+		},
+		willTransitionFrom : function(transition, component){
+             if(!confirm('Are you sure you want to leave the page')){
+             	 transition.abort();
+             }
+             
+		}
+	},
     render(){
     	return(
                <div>
