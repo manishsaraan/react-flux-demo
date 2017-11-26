@@ -9,7 +9,7 @@ var concat  = require('gulp-concat'); //concatinates files
 var concat_css = require('gulp-concat-css'); //contact css
 var lint = require('gulp-eslint'); //lint js files
 var config = {
-	port : 3000,
+	port : 8000,
 	devBaseUrl : 'http://localhost',
 	paths : {
 		html : './src/*.html',
@@ -104,6 +104,6 @@ gulp.task('lint', function(){
 });
 gulp.task('watch', function(){
 	gulp.watch(config.paths.html,['html']);
-	gulp.watch(config.paths.js,['js', 'lint']);
+	gulp.watch(config.paths.js,['js']);
 })
-gulp.task('default',['html', 'js', 'css', 'images', 'open', 'lint', 'watch']);
+gulp.task('default',['html', 'js', 'css', 'images', 'open', 'watch']);

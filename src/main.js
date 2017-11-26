@@ -17,7 +17,7 @@ var App = React.createClass({
 		}
 
 		return (
-                <div>
+                <div>                
                  <Header/>
                  <Child/>
                 </div>
