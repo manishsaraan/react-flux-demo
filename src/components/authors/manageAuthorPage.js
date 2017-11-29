@@ -3,13 +3,17 @@ var React = require('react');
 var AuthorForm = require('./authorForm');
 var AuthorApi = require('../../api/authorApi');
 var Router = require('react-router');
+var toastr = require('toastr');
 
 var MangeAuthorPage = React.createClass({
 	mixins : [
        Router.Navigation
 	],
 	getInitialState : function(){
-		return  { author : { id : '', firstName : '', lastName : ''} };
+		return  { author : { id : '', firstName : '', lastName : ''},
+		          errors : {}
+
+		  };
 	},
 	setAuthorState : function(){
 		var field  = event.target.name;
@@ -19,9 +23,31 @@ var MangeAuthorPage = React.createClass({
 			author : this.state.author
 		});
 	},
+	authorFormValidate : function(){
+		var formIsValid = true;
+		this.state.errors = {}; //clear previous errors
+        if(this.state.author.firstName.length < 3){
+        	this.state.errors.firstName = "First Name must be min 3 letters"; 
+        	formIsValid = false;
+        }
+        if(this.state.author.lastName.length < 3){
+        	this.state.errors.lastName = "Last Name must be min 3 letters"; 
+        	formIsValid = false;
+        }
+        this.setState({
+        	errors : this.state.errors
+        });
+        return formIsValid;
+	},
 	saveAuthor :  function(event){
 		event.preventDefault();
+
+		//validate input
+		if(!this.authorFormValidate()){
+			return;
+		}
         AuthorApi.saveAuthor(this.state.author);
+        toastr.success('Author Saved.');
         this.transitionTo('authors');
 	},
 	 render(){
@@ -31,6 +57,7 @@ var MangeAuthorPage = React.createClass({
                        author = {this.state.author}
                        onChange = {this.setAuthorState}
                        onSave = {this.saveAuthor}
+                       errors = {this.state.errors}
                    />
                 </div>
 	 		);
