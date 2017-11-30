@@ -32,9 +32,17 @@ var AuthorStore = assign({}, EventEmitter.prototype, {
 
 Distpather.register(function(action){
 	switch(action.actionType){
+         case  action.actionType.INITIALIZE : 
+               _authors = action.initialDate.authors;
+               AuthorStore.emitChange();
+               break;
+
          case  action.actionType.CREATE_AUTHOR :
                 _authors.push(action.author);
                 AuthorStore.emitChange();
+                break;
+         default : 
+         //no need
 	}
 });
 module.exports = AuthorStore;
