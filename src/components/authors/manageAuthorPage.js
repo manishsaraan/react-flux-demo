@@ -1,7 +1,8 @@
 'use strict';
 var React = require('react');
 var AuthorForm = require('./authorForm');
-var AuthorApi = require('../../api/authorApi');
+var AuthorActions = require('../../actions/authorActions');
+var AuthorStore = require('../../stores/authorStore');
 var Router = require('react-router');
 var toastr = require('toastr');
 
@@ -27,7 +28,7 @@ var MangeAuthorPage = React.createClass({
 		var authorId = this.props.params.id; //from the path id
 		if(authorId){
 			this.setState({
-				author : AuthorApi.getAuthorById(authorId)
+				author : AuthorStore.getAuthorById(authorId)
 			});
 		}
 	},
@@ -65,7 +66,8 @@ var MangeAuthorPage = React.createClass({
 		if(!this.authorFormValidate()){
 			return;
 		}
-        AuthorApi.saveAuthor(this.state.author);
+		        
+        AuthorActions.createAuthor(this.state.author);
         toastr.success('Author Saved.');
         this.setState({dirty : false});
         this.transitionTo('authors');
