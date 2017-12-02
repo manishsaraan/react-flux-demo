@@ -4,7 +4,7 @@ var Router = require('react-router');
 var Routes = require('./routes');
 var InitializeActions  = require('./actions/initializeActions');
 
-//inii app
+//init app
 InitializeActions.initApp();
 
 Router.run(Routes, function(Handler){

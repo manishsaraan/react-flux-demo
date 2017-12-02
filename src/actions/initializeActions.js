@@ -3,7 +3,7 @@ var Dispatcher = require('../dispatcher/appDispatcher');
 var AuthorApi = require('../api/authorApi');
 var actionTypes = require('../constants/actionTypes');
 
-var initializeActions = {
+var InitializeActions = {
      initApp : function(){
      	 Dispatcher.dispatch({
      	 	 actionType : actionTypes.INITIALIZE,
@@ -13,4 +13,4 @@ var initializeActions = {
      	 })
      }
 };
-module.exports = initializeActions;
+module.exports = InitializeActions;

@@ -21,7 +21,7 @@ var AuthorStore = assign({}, EventEmitter.prototype, {
        	this.emit(CHANGE_EVENT);
        },
 
-       getAllAuthors : function(){
+       getAllAuthors : function(){       
        	return _authors;
        },
 
@@ -32,13 +32,20 @@ var AuthorStore = assign({}, EventEmitter.prototype, {
 
 Distpather.register(function(action){
 	switch(action.actionType){
-         case  action.actionType.INITIALIZE : 
-               _authors = action.initialDate.authors;
+         case  ActionTypes.INITIALIZE : 
+               _authors = action.initialData.authors;
                AuthorStore.emitChange();
                break;
 
-         case  action.actionType.CREATE_AUTHOR :
-                _authors.push(action.author);
+         case  ActionTypes.CREATE_AUTHOR :               
+                _authors.push(action.data.author);
+                AuthorStore.emitChange();
+                break;
+
+         case  ActionTypes.UPDATE_AUTHOR :               
+                var existingAuthor = _.find(_authors, {id : action.data.author.id});
+                var existingAuthorIndex = _.indexOf(_authors, existingAuthor);
+                _authors.splice(existingAuthorIndex, 1, action.data.author);
                 AuthorStore.emitChange();
                 break;
          default : 
