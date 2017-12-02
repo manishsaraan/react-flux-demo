@@ -48,6 +48,12 @@ Distpather.register(function(action){
                 _authors.splice(existingAuthorIndex, 1, action.data.author);
                 AuthorStore.emitChange();
                 break;
+         case  ActionTypes.DELETE_AUTHOR :               
+                _.remove(_authors, function(author){                                
+                   return action.data.id === author.id;
+                });
+                AuthorStore.emitChange();
+                break;       
          default : 
          //no need
 	}

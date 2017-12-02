@@ -11,6 +11,18 @@ var  Authors = React.createClass({
 	  	 	authors : AuthorStore.getAllAuthors()
 	  	 };
 	  },
+	  componentWillMount : function(){
+	  	 AuthorStore.addChangeListener(this._onChange);
+	  },
+	  //clean up when this component unmount
+	  componentWillUnmount : function(){
+         AuthorStore.removeChangeListener(this._onChange);
+	  },
+	  _onChange : function(){
+         this.setState({
+         	 authors : AuthorStore.getAllAuthors()
+         });
+	  },
 	  render() {
         return(
                <div>
